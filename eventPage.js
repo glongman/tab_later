@@ -218,7 +218,7 @@ function tabNow(tab_info, callback) {
       }
     }
     // open it
-    chrome.tabs.create({url:tab_info.url, selected:false}, afterCreate);
+    chrome.tabs.create({url:tab_info.url, selected:false, index:999}, afterCreate);
     if (canPlaySound()) {
       audio = new Audio("sounds/SunriseChord.ogg");
       audio.load();
