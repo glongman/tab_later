@@ -2,7 +2,7 @@
 var MIN_IN_MILIS=1000*60;
 var HOUR_IN_MILLIS=MIN_IN_MILIS*60;
 var HOUR_DELAY=3 /*hours*/;
-var STORED_TAB_LIMIT=2;
+var STORED_TAB_LIMIT=8; // arbitrary, opinionated, choice
 
 /** Preferences **/
 var NOTIFICATION_KEY="tab_later_notify",
