@@ -133,24 +133,29 @@ function tabLaterVisualNotify(title, message, contextMessage, callback) {
 }
 
 /****** Tab context menu ***********/
-
+function buildContextMenu() {
+  // TODO finish me
+}
 
 function onMenuClickHandler(info, tab) {
-  if (info.menuItemId === "radio1" || info.menuItemId === "radio2") {
-    console.log("radio item " + info.menuItemId +
-        " was clicked (previous checked state was "  +
-        info.wasChecked + ")");
-  } else if (info.menuItemId === "checkbox1" || info.menuItemId === "checkbox2") {
-    console.log(JSON.stringify(info));
-    console.log("checkbox item " + info.menuItemId +
-        " was clicked, state is now: " + info.checked +
-        " (previous state was " + info.wasChecked + ")");
-
-  } else {
-    console.log("item " + info.menuItemId + " was clicked");
-    console.log("info: " + JSON.stringify(info));
-    console.log("tab: " + JSON.stringify(tab));
-  }
+  // TODO finish me
+  
+  // Some dorky demo
+  // if (info.menuItemId === "radio1" || info.menuItemId === "radio2") {
+  //   console.log("radio item " + info.menuItemId +
+  //       " was clicked (previous checked state was "  +
+  //       info.wasChecked + ")");
+  // } else if (info.menuItemId === "checkbox1" || info.menuItemId === "checkbox2") {
+  //   console.log(JSON.stringify(info));
+  //   console.log("checkbox item " + info.menuItemId +
+  //       " was clicked, state is now: " + info.checked +
+  //       " (previous state was " + info.wasChecked + ")");
+  // 
+  // } else {
+  //   console.log("item " + info.menuItemId + " was clicked");
+  //   console.log("info: " + JSON.stringify(info));
+  //   console.log("tab: " + JSON.stringify(tab));
+  // }
 }
 chrome.contextMenus.onClicked.addListener(onMenuClickHandler);
 
@@ -326,7 +331,8 @@ chrome.commands.onCommand.addListener(function(command) {
 /***** ON INSTALL *****/
 
 // Among other things...
-// check for sync'd prefs, otherwise store defaults
+// check for sync'd prefs, otherwise store defaults; and
+// build the context menu
 chrome.runtime.onInstalled.addListener(function(details) {
   var foundKey, done=false;
   chrome.storage.sync.get(NOTIFICATION_KEY, function(items) {
@@ -343,4 +349,6 @@ chrome.runtime.onInstalled.addListener(function(details) {
       chrome.storage.sync.set(data, function(){});
     }
   });
+  
+  buildContextMenu();
 });
