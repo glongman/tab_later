@@ -1,0 +1,32 @@
+{
+  "manifest_version": 2,
+  "name": "Tab Later - close a tab and schedule it to pop back up later",
+  "version": "0.1",
+  "background": {
+    "scripts": ["eventPage.js"],
+    "peristent" : true
+  },
+  "browser_action" : {
+    "default_icon" : "icon.png",
+    "default_popup" : "popup.html"
+  },
+  "commands" : {
+    "tab-later" : {
+      "suggested_key" : { 
+        "default" : "Ctrl+Shift+T",
+        "mac" : "Alt+Shift+T" 
+      },
+      "description" : "Close the current tab and show it later"
+    }
+  },
+  "permissions" : [
+    "tabs",
+    "alarms",
+    "storage",
+    "notifications",
+    "contextMenus"
+  ],
+  "web_accessible_resources": [
+   "icon.png"
+  ]
+}
