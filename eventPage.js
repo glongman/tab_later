@@ -39,8 +39,8 @@ function minutesAlarmInfo(time) {
   };
 }
 
-var buildAlarmInfo = minutesAlarmInfo; // TESTING
-//var addAlertOffset = addHoursToDate; // NOT TESTING
+//var buildAlarmInfo = minutesAlarmInfo; // TESTING
+var buildAlarmInfo = hoursAlarmInfo; // NOT TESTING
 
 /****** LOCAL STORAGE HELPERS *******/
 
