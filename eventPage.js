@@ -134,28 +134,27 @@ function tabLaterVisualNotify(title, message, contextMessage, callback) {
 
 /****** Tab context menu ***********/
 function buildContextMenu() {
-  // TODO finish me
+  var i, shortcut;
+  chrome.commands.getAll(function(commands) {
+    for(i=0;i<commands.length;i++) {
+      if (commands[i].name === 'tab-later') {
+        shortcut = (commands[i].shortcut && commands[i].shortcut.length > 0) ? "("+commands[i].shortcut+")" : "";
+        chrome.contextMenus.create({
+          "id": "tab-later",
+          "title": "Tab Later "+shortcut,
+          "contexts": ["page"],
+        });
+      }
+    }
+  });
 }
 
-function onMenuClickHandler(info, tab) {
-  // TODO finish me
-  
-  // Some dorky demo
-  // if (info.menuItemId === "radio1" || info.menuItemId === "radio2") {
-  //   console.log("radio item " + info.menuItemId +
-  //       " was clicked (previous checked state was "  +
-  //       info.wasChecked + ")");
-  // } else if (info.menuItemId === "checkbox1" || info.menuItemId === "checkbox2") {
-  //   console.log(JSON.stringify(info));
-  //   console.log("checkbox item " + info.menuItemId +
-  //       " was clicked, state is now: " + info.checked +
-  //       " (previous state was " + info.wasChecked + ")");
-  // 
-  // } else {
-  //   console.log("item " + info.menuItemId + " was clicked");
-  //   console.log("info: " + JSON.stringify(info));
-  //   console.log("tab: " + JSON.stringify(tab));
-  // }
+function onMenuClickHandler(e) {
+  if (e.menuItemId === "tab-later") {
+    chrome.tabs.query({currentWindow: true, active: true}, function(tabs) {
+      tabLater(tabs[0]);
+    });
+  }
 }
 chrome.contextMenus.onClicked.addListener(onMenuClickHandler);
 

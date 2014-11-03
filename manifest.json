@@ -19,6 +19,9 @@
       "description" : "Close the current tab and show it later"
     }
   },
+  "icons" : {
+    "16":"icon.png"
+  },
   "permissions" : [
     "tabs",
     "alarms",
