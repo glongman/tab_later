@@ -1,7 +1,6 @@
 /** CONSTANTS **/
 var MIN_IN_MILIS=1000*60;
 var HOUR_IN_MILLIS=MIN_IN_MILIS*60;
-var HOUR_DELAY=3 /*hours*/;
 var STORED_TAB_LIMIT=8; // arbitrary, opinionated, choice
 
 /** Preferences **/
@@ -13,6 +12,9 @@ var NOTIFICATION_KEY="tab_later_notify",
      BOTH:3
     },
     NOTIFICATIONS=NOTIFICATION_VALUES.BOTH;
+    
+var DELAY_KEY="tab_later_delay",
+    HOUR_DELAY=3 /*hours*/;
 
 var DEBUG=1;
 
@@ -295,6 +297,16 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
         NOTIFICATIONS = NOTIFICATION_VALUES.BOTH;
       }
     }
+    key = DELAY_KEY;
+    if (changes[key]) {
+      storageChange = changes[key];
+      if (storageChange.newValue) {
+        HOUR_DELAY = storageChange.newValue;
+      } else {
+        // something's off - set back to default
+        HOUR_DELAY = 3;
+      }
+    }
     // TODO debug remove (below)
     console.log('Storage key "%s" in namespace "%s" changed. ' +
       'Old value was "%s", new value is "%s".',
@@ -332,6 +344,7 @@ chrome.commands.onCommand.addListener(function(command) {
 // Among other things...
 // check for sync'd prefs, otherwise store defaults; and
 // build the context menu
+// show welcome page
 chrome.runtime.onInstalled.addListener(function(details) {
   var foundKey, done=false;
   chrome.storage.sync.get(NOTIFICATION_KEY, function(items) {
@@ -348,6 +361,28 @@ chrome.runtime.onInstalled.addListener(function(details) {
       chrome.storage.sync.set(data, function(){});
     }
   });
+  chrome.storage.sync.get(DELAY_KEY, function(items) {
+    for (foundKey in items) {
+      if (foundKey === DELAY_KEY) {
+        HOUR_DELAY = items[DELAY_KEY];
+        done = true;
+        break;
+      }
+    }
+    if (!done) {
+      var data = {};
+      data[DELAY_KEY] = HOUR_DELAY;
+      chrome.storage.sync.set(data, function(){});
+    }
+  });
+
   
   buildContextMenu();
+  
+  if (!window.localStorage.getItem('hasSeenIntro')) {
+    window.localStorage.setItem('hasSeenIntro', 'yep');
+    chrome.tabs.create({
+      url: 'resources/welcome.html'
+    });
+  }
 });

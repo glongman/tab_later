@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tab Later Options</title>
+  <style>
+    body: { padding: 10px; }
+  </style>
+</head>
+
+<body>
+  Bring back tabs after this many hours have passed:
+  <select id="tabs-later">
+   <option value="3">3 hours</option>
+   <option value="6">6 hours</option>
+   <option value="9">9 hours</option>
+   <option value="12">12 hours</option>
+  </select>
+  
+  Notifications:
+  <select id="notify">
+   <option value="0">None</option>
+   <option value="1">Sound Only</option>
+   <option value="2">Visual Only</option>
+   <option value="3">Both Visual and Sound</option>
+  </select>
+  
+  <div id="status"></div>
+  <button id="save">Save</button>
+
+  <script src="options.js"></script>
+</body>
+</html>
