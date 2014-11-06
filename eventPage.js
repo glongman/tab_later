@@ -135,33 +135,6 @@ function tabLaterVisualNotify(title, message, contextMessage, callback) {
     function() {});
 }
 
-/****** Tab context menu ***********/
-function buildContextMenu() {
-  var i, shortcut;
-  chrome.commands.getAll(function(commands) {
-    for(i=0;i<commands.length;i++) {
-      if (commands[i].name === 'tab-later') {
-        shortcut = (commands[i].shortcut && commands[i].shortcut.length > 0) ? "("+commands[i].shortcut+")" : "";
-        chrome.contextMenus.create({
-          "id": "tab-later",
-          "title": "Tab Later "+shortcut,
-          "contexts": ["page"],
-        });
-      }
-    }
-  });
-}
-
-function onMenuClickHandler(e) {
-  if (e.menuItemId === "tab-later") {
-    chrome.tabs.query({currentWindow: true, active: true}, function(tabs) {
-      tabLater(tabs[0]);
-    });
-  }
-}
-chrome.contextMenus.onClicked.addListener(onMenuClickHandler);
-
-
 /******** Meat ***********/
 
 function tabLater(tab) {
@@ -323,6 +296,45 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
   
 });
 
+// page action - set once
+chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+  if (isSupportedUrl(tabs[0].url)) {
+    chrome.pageAction.show(tabs[0].id);
+  } else {
+    chrome.pageAction.hide(tabs[0].id);
+  }
+});
+
+// page action - on tab change
+chrome.tabs.onSelectionChanged.addListener(function(tabId) {
+  chrome.tabs.get(tabId, function(tab) {
+    if (isSupportedUrl(tab.url) ) {
+      chrome.pageAction.show(tab.id);
+    } else {
+      chrome.pageAction.hide(tab.id);
+    }
+  })
+});
+
+// page action - url changes
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    if (tabs[0].id === tabId && changeInfo.url) {
+      if (isSupportedUrl(changeInfo.url)) {
+        chrome.pageAction.show(tabId);
+      } else {
+        chrome.pageAction.hide(tabId);
+      }
+    } 
+  });  
+})
+
+// page action - clicked
+chrome.pageAction.onClicked.addListener(function(tab) {
+  tabLater(tab);
+});
+
+
 // add alarm listener
 chrome.alarms.onAlarm.addListener(function(alarm) {
   var key = alarm.name;
@@ -334,6 +346,7 @@ chrome.alarms.onAlarm.addListener(function(alarm) {
     }
   });
 });
+
 
 chrome.commands.onCommand.addListener(function(command) {
   if (command === "tab-later") {
