@@ -221,7 +221,7 @@ function tabNow(tab_info, callback) {
 /***** Event Handlers ****
  *
  * How this monster works:
- *    - On Initiate Event (context menu or key sequence)
+ *    - On Initiate Event (page action or key sequence)
  *      Store (meta data)
  *      Close the tab
  *    - On Storage change
@@ -357,11 +357,6 @@ chrome.commands.onCommand.addListener(function(command) {
 });
 
 /***** ON INSTALL *****/
-
-// Among other things...
-// check for sync'd prefs, otherwise store defaults; and
-// build the context menu
-// show welcome page
 chrome.runtime.onInstalled.addListener(function(details) {
   var foundKey, done=false;
   chrome.storage.sync.get(NOTIFICATION_KEY, function(items) {
