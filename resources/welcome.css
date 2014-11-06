@@ -5,3 +5,7 @@ body {
   background: url(images/bkgd.jpg) no-repeat;
   background-size: cover;
 }
+
+.jumbotron {
+  margin-top:100px;
+}
