@@ -26,8 +26,7 @@
     "tabs",
     "alarms",
     "storage",
-    "notifications",
-    "contextMenus"
+    "notifications"
   ],
   "web_accessible_resources": [
    "icon.png",
