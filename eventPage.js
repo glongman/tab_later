@@ -113,7 +113,7 @@ function tabLaterNotAllowed(message, contextMessage) {
   chrome.notifications.create(
     "tabLaterNotAllowed",
     {
-      title: " Tab Later - Oh Noes!",
+      title: " CYaL8tr - Oh Noes!",
       iconUrl: 'icon.png',
       type: 'basic',
       message: message,

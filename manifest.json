@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "Tab Later - close a tab and schedule it to pop back up later",
+  "name": "CYaL8tr - close a tab and schedule it to pop back up later",
   "version": "0.1",
   "background": {
     "scripts": ["eventPage.js"],
