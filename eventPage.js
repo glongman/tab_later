@@ -2,6 +2,7 @@
 var MIN_IN_MILIS=1000*60;
 var HOUR_IN_MILLIS=MIN_IN_MILIS*60;
 var STORED_TAB_LIMIT=8; // arbitrary, opinionated, choice
+var TAB_STORE_PREFIX="tab-later_";
 
 /** Preferences **/
 var NOTIFICATION_KEY="tab_later_notify",
@@ -47,7 +48,7 @@ var buildAlarmInfo = hoursAlarmInfo; // NOT TESTING
 /****** LOCAL STORAGE HELPERS *******/
 
 function storageKeyFor(tab_info) {
-  return "tab-later_"+tab_info.url;
+  return TAB_STORE_PREFIX+tab_info.url;
 }
 
 function removeTabFromStorage(tab_info) {
@@ -263,6 +264,9 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
     chrome.alarms.getAll(function(alarms) {
       for (key in changes) {
         storageChange = changes[key];
+        if (!key.match("^"+TAB_STORE_PREFIX+".*")) {
+          continue;
+        }
         if (alarms.indexOf(key) > 0) {
             // alarm exists - nuke if new value is undefined
             if (storageChange.newValue === undefined) {
