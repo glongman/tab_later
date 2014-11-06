@@ -387,9 +387,6 @@ chrome.runtime.onInstalled.addListener(function(details) {
       chrome.storage.sync.set(data, function(){});
     }
   });
-
-  
-  buildContextMenu();
   
   if (!window.localStorage.getItem('hasSeenIntro')) {
     window.localStorage.setItem('hasSeenIntro', 'yep');
