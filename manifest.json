@@ -1,6 +1,7 @@
 {
   "manifest_version": 2,
-  "name": "CYaL8tr - close a tab and schedule it to pop back up later",
+  "name": "CYaL8tr",
+  "description": "Close a tab and it will pop back up later",
   "version": "0.1",
   "background": {
     "scripts": ["eventPage.js"],
@@ -34,9 +35,5 @@
    "resources/css/welcome.css",
    "resources/css/bootstrap.css"
   ] ,
-  "options_page": "options.html"//,
-  // "options_ui": {
-  //   "page": "options.html",
-  //   "chrome_style": true
-  // }
+  "options_page": "options.html"
 }
