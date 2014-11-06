@@ -157,7 +157,7 @@ function tabLater(tab) {
           audio.play();
         }
         if (canShowVisualAlert()) {
-          url = new URL("http://example.com/aa/bb/");
+          url = new URL(tab_info.url);
           tabLaterVisualNotify(
             "Saved for Later",
             truncate(tab_info.title),
